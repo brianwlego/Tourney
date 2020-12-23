@@ -2,7 +2,7 @@ const express = require('express')
 const { model } = require('mongoose')
 
 
-const router = express.router()
+const router = express.Router()
 
 const usersController = require('../controllers/users_controller')
 
