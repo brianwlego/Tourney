@@ -25,6 +25,7 @@ exports.getTournament = (req, res, next) => {
 }
 
 exports.createTournament = (req, res, next) => {
+  console.log('inside controller')
   const tournement = new Tournament({
     name: req.body.name, 
     category: req.body.category,
