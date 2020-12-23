@@ -25,8 +25,7 @@ const tourneySchema = new Schema({
   },
   participants: [{
     type: Schema.Types.ObjectId,
-    ref: 'User', 
-    maxlength: playerLimit
+    ref: 'User'
   }]
 
 })

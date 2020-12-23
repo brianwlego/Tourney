@@ -24,5 +24,14 @@ exports.getUser = (req, res, next) => {
 }
 
 exports.createUser = (req, res, next) => {
-
+  User.create({
+    name: req.body.name, 
+    password: req.body.password
+  })
+    .then(user => {
+      res.status(201).json({
+        user: user
+      })
+    })
+    .catch(err=>console.log(err))
 }
