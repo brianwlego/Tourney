@@ -1,0 +1,17 @@
+const express = require('express')
+const { model } = require('mongoose')
+
+
+const router = express.router()
+
+const usersController = require('../controllers/users_controller')
+
+//INDEX//
+router.get('/users', usersController.getUsers)
+//SHOW//
+router.get('/user/:id', usersController.getUser)
+//CREATE//
+router.post('/user', usersController.createUser)
+
+
+module.exports = router;
