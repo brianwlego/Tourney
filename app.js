@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 
 const userRoutes = require('./routes/user_routes');
 const tournamentRoutes = require('./routes/tournament_routes');
+const matchRoutes = require('./routes/match_routes')
 
 const app = express();
 
@@ -20,7 +21,7 @@ app.use(bodyParser.json());
 
 
 
-
+app.use('/tournament/:id',matchRoutes)
 app.use(tournamentRoutes)
 app.use(userRoutes)
 

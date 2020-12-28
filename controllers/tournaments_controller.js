@@ -1,4 +1,3 @@
-const tournament = require('../models/tournament')
 const Tournament = require('../models/tournament')
 
 exports.getTournaments = (req, res, next) => {
@@ -25,7 +24,7 @@ exports.getTournament = (req, res, next) => {
 }
 
 exports.createTournament = (req, res, next) => {
-  const tourney = new Tournament({
+  const tournament = new Tournament({
     name: req.body.name, 
     category: req.body.category,
     playerLimit: req.body.playerLimit ? req.body.playerLimit : 1,
@@ -34,7 +33,7 @@ exports.createTournament = (req, res, next) => {
   })
   const participants = req.body.participants
   
-  console.log(tourney)
+  console.log(tournament)
   //find participants and assign to new tournament
   tourney.save()
     .then(tournament => {

@@ -7,6 +7,11 @@ const tourneySchema = new Schema({
     type: String,
     required: true
   },
+  creator: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
   category: {
   type: String,
   required: true
@@ -26,7 +31,15 @@ const tourneySchema = new Schema({
   participants: [{
     type: Schema.Types.ObjectId,
     ref: 'User'
-  }]
+  }],
+  rounds: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Round'
+  }],
+  active: {
+    type: Boolean,
+    required: true
+  }
 
 })
 
