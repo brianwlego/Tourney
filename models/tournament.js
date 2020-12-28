@@ -9,12 +9,11 @@ const tourneySchema = new Schema({
   },
   creator: {
     type: Schema.Types.ObjectId,
-    ref: 'User',
-    required: true
+    ref: 'User'
   },
   category: {
-  type: String,
-  required: true
+    type: String,
+    required: true
   },
   playerLimit: {
     type: Number, 

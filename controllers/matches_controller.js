@@ -16,10 +16,11 @@ exports.createMatch = (req, res, next) => {
   })
 
   foundRound.matches.push(createdMatch)
-  foundRound.save();
+  foundRound.save()
+    .then(()=> {
+      res.status(201).json({
+        match: createdMatch
+      })
+    })
 
-  res.status(201).json({
-    match: createdMatch
-  })
-  
 }
