@@ -25,18 +25,18 @@ exports.getTournament = (req, res, next) => {
 }
 
 exports.createTournament = (req, res, next) => {
-  console.log('inside controller')
-  const tournement = new Tournament({
+  const tourney = new Tournament({
     name: req.body.name, 
     category: req.body.category,
-    playerLimit: req.body.playerLimit,
+    playerLimit: req.body.playerLimit ? req.body.playerLimit : 1,
     startDate: req.body.startDate,
     endDate: req.body.endDate,
   })
   const participants = req.body.participants
-
+  
+  console.log(tourney)
   //find participants and assign to new tournament
-  tournament.save()
+  tourney.save()
     .then(tournament => {
       res.status(201).json({
         tournament: tournament

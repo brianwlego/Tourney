@@ -9,7 +9,7 @@ router.get('/tournaments', tournaments_controller.getTournaments)
 //SHOW//
 router.get('/tournament/:id', tournaments_controller.getTournament)
 //CREATE//
-router.post('tournament', tournaments_controller.createTournament)
+router.post('/tournament', tournaments_controller.createTournament)
 
 
 module.exports = router;
