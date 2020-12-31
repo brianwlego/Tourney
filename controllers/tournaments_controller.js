@@ -14,7 +14,7 @@ exports.getTournament = (req, res, next) => {
   Tournament.findById(req.params.id)
     .then(tournament => {
       if (!tournament){
-        res.status(404).json({message: "tournament not found"})
+        res.status(404).json({message: "Tournament not found"})
       }
       res.status(201).json({
         tournament: tournament
@@ -41,4 +41,24 @@ exports.createTournament = (req, res, next) => {
       })
     })
     .catch(err=>console.log(err))
+}
+
+exports.joinTournament = (req, res, next) => {
+  const user = User.findById(req.body.id)
+  const tournament = Tournament.findById(req.params.id)
+
+  if (tournament.participants.length < tournament.playerLimit){
+    tournament.participants.push(user)
+    tournament.save()
+      .then(savedTournament => {
+        res.status(201).json({
+          message: "Player added to tournament",
+          tournament: savedTournament
+        })
+      })
+  } else {
+    res.status(200).json({
+      message: "Could not add player to tournment. Player limit has already been reached."
+    })
+  }
 }
