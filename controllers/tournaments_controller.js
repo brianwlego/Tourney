@@ -48,7 +48,10 @@ exports.joinTournament = (req, res, next) => {
   const tournament = Tournament.findById(req.params.id)
 
   if (tournament.participants.length < tournament.playerLimit){
+    //FOR IF THERE IS STILL SPACE IN TOURNAMENT//
     tournament.participants.push(user)
+    user.joinedTournament.push(tournament)
+    user.save();
     tournament.save()
       .then(savedTournament => {
         res.status(201).json({
@@ -57,6 +60,7 @@ exports.joinTournament = (req, res, next) => {
         })
       })
   } else {
+    //IF CAPACITY FOR THE TOURNAMENT HAS BEEN REACHED//
     res.status(200).json({
       message: "Could not add player to tournment. Player limit has already been reached."
     })

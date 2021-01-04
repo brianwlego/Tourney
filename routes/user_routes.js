@@ -11,7 +11,7 @@ router.get('/users', usersController.getUsers)
 //SHOW//
 router.get('/user/:id', usersController.getUser)
 //CREATE//
-router.post('/user', usersController.createUser)
+router.post('/signup', usersController.createUser)
 
 
 module.exports = router;

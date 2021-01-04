@@ -20,7 +20,6 @@ app.use(cors({
 app.use(bodyParser.json());
 
 
-
 app.use('/tournament/:id',matchRoutes)
 app.use(tournamentRoutes)
 app.use(userRoutes)

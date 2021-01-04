@@ -42,5 +42,12 @@ const tourneySchema = new Schema({
 
 })
 
+tourneySchema.method.createRound = function(){
+  //Called once participantes.length reaches the player limit
+  //
+
+  
+}
+
 
 module.exports = mongoose.model('Tournament', tourneySchema)

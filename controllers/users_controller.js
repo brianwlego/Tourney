@@ -25,8 +25,10 @@ exports.getUser = (req, res, next) => {
 
 exports.createUser = (req, res, next) => {
   User.create({
-    name: req.body.name, 
-    password: req.body.password
+    username: req.body.username, 
+    email: req.body.email,
+    password: req.body.password,
+    repeatPassword: req.body.repeatPassword
   })
     .then(user => {
       res.status(201).json({
