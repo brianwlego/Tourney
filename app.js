@@ -25,7 +25,7 @@ app.use(tournamentRoutes)
 app.use(userRoutes)
 
 app.use((error, req, res, next) => {
-  console.log(error);
+  console.log(error)
   const status = error.statusCode || 500;
   const message = error.message || 'Server error!'
   res.status(status).json({message: message, data: error.data})
