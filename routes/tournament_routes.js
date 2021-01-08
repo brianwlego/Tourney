@@ -6,11 +6,14 @@ const router = express.Router()
 
 
 //INDEX//
-router.get('/tournaments', isAuth, tournaments_controller.getTournaments)
+router.get('/active-tournaments', tournaments_controller.getActiveTournaments)
+router.get('/inactive-tournaments', tournaments_controller.getInactiveTournaments)
 //SHOW//
-router.get('/tournament/:id', isAuth, tournaments_controller.getTournament)
+router.get('/tournament/:id', tournaments_controller.getTournament)
 //CREATE//
-router.post('/tournament', isAuth, tournaments_controller.createTournament)
+router.post('/tournament', tournaments_controller.createTournament)
+//JOIN TOURNAMENT//
+router.put('/tournament/:id/join', tournaments_controller.joinTournament)
 
 
-module.exports = router;
+module.exports = router; 
