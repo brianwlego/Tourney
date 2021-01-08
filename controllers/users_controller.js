@@ -3,30 +3,9 @@ const {validationResult} = require('express-validator')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
-exports.getUsers = (req, res, next) => {
-  User.find()
-    .then(users => {
-      res.status(200).json({
-        users: users
-      })
-    })
-    .catch(err=>console.log(err))
-}
-
-exports.getUser = (req, res, next) => {
-  User.findById(req.params.id)
-    .then(user => {
-      if (!user){
-        res.status(404).json({message: "User not found"})
-      }
-      res.status(201).json({
-        user: user
-      })
-    })
-    .catch(err=>console.log(err))
-}
 
 exports.createUser = async (req, res, next) => {
+  try{
   //ERROR HANDLING
   const errors = validationResult(req)
   if (!errors.isEmpty()){
@@ -36,7 +15,6 @@ exports.createUser = async (req, res, next) => {
     throw err;
   }
   //CREATING NEW USER 
-  try{
     const hashedPW = await bcrypt.hash(req.body.password, 12)
     const user = new User({
       username: req.body.username, 
@@ -54,7 +32,7 @@ exports.createUser = async (req, res, next) => {
   }
 }
 
-exports.login = async (req, res, next) => {
+exports.loginUser = async (req, res, next) => {
   try{
     const user = await User.findOne({email: req.body.email})
     if (!user){
@@ -62,6 +40,12 @@ exports.login = async (req, res, next) => {
       error.statusCode = 404
       throw error;
     }
+    const isEqual = await bcrypt.compare(req.body.password, user.password)
+    if (!isEqual){
+      const error = new Error('Incorrect password')
+      error.statusCode = 401;
+      throw error;
+    } 
     const token = jwt.sign({
       email: user.email, 
       userId: user._id.toString()

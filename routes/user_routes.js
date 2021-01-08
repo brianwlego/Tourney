@@ -6,10 +6,6 @@ const User = require('../models/user')
 const router = express.Router()
 const usersController = require('../controllers/users_controller')
 
-//INDEX//
-router.get('/users', usersController.getUsers)
-//SHOW//
-router.get('/user/:id', usersController.getUser)
 //LOGIN USER//
 router.post('/login', usersController.loginUser)
 //SIGNUP USER//
@@ -26,7 +22,7 @@ router.post('/signup', [
     })
     .normalizeEmail(),
   body('password').trim().notEmpty(),
-  body('name').trim().notEmpty()
+  body('username').trim().notEmpty()
 ], usersController.createUser)
 
 
