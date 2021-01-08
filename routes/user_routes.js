@@ -10,7 +10,9 @@ const usersController = require('../controllers/users_controller')
 router.get('/users', usersController.getUsers)
 //SHOW//
 router.get('/user/:id', usersController.getUser)
-//CREATE//
+//LOGIN USER//
+router.post('/login', usersController.loginUser)
+//SIGNUP USER//
 router.post('/signup', [
   body('email')
     .isEmail()

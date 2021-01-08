@@ -15,10 +15,6 @@ const userSchema = new Schema({
     type: String, 
     required: true
   },
-  repeatPassword: {
-    type: String, 
-    required: true
-  },
   joinedTournaments: [{
     type: Schema.Types.ObjectId, 
     ref: 'Tournament'
