@@ -24,6 +24,13 @@ app.use('/tournament/:id',matchRoutes)
 app.use(tournamentRoutes)
 app.use(userRoutes)
 
+app.use((error, req, res, next) => {
+  console.log(error);
+  const status = error.statusCode || 500;
+  const message = error.message || 'Server error!'
+  res.status(status).json({message: message, data: error.data})
+})
+
 
 mongoose.connect(`mongodb+srv://brian:${process.env.DBPASSWORD}@cluster0.11orq.mongodb.net/tourney?retryWrites=true&w=majority`, { 
   useNewUrlParser: true, 
