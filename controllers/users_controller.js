@@ -112,3 +112,12 @@ exports.loginUser = async (req, res, next) => {
     next(error);
   }
 }
+
+exports.logoutUser = (req, res, next) => {
+  res.status(200)
+    .clearCookie('token')
+    .json({
+      message: "User logged out."
+    })
+
+}
