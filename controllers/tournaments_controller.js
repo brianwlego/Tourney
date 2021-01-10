@@ -1,14 +1,17 @@
 const Tournament = require('../models/tournament')
 const User = require('../models/user')
 
+
+
 exports.getActiveTournaments = async (req, res, next) => {
   try{
     const tournaments = await Tournament.find({active: true})
     res.status(200).json({
       activeTournaments: tournaments
     })
-  } catch (err){
-    err=>console.log(err)
+  } catch (error){
+    if (!error.statusCode) error.statusCode = 500;
+    next(error);
   }
 }
 
@@ -18,8 +21,9 @@ exports.getInactiveTournaments = async (req, res, next) => {
     res.status(200).json({
       inactiveTournaments: tournaments
     })
-  } catch (err){
-    err=>console.log(err)
+  } catch (error){
+    if (!error.statusCode) error.statusCode = 500;
+    next(error);
   }
 }
 
@@ -41,7 +45,7 @@ exports.createTournament = async (req, res, next) => {
   const tournament = new Tournament({
     name: req.body.name, 
     description: req.body.description,
-    // creator: req.body.creator,
+    creator: req.userId,
     category: req.body.category,
     playerLimit: req.body.playerLimit,
     startDate: req.body.startDate,
@@ -53,14 +57,15 @@ exports.createTournament = async (req, res, next) => {
   res.status(201).json({
     tournament: tournament
   })
-  } catch (err){
-    err=>console.log(err)
+  } catch (error){
+    if (!error.statusCode) error.statusCode = 500;
+    next(error);
   }
 }
 
 exports.joinTournament = async (req, res, next) => {
   try {
-    const user = await User.findById(req.body._id)
+    const user = await User.findById(req.userId)
     const tournament = await Tournament.findById(req.params.id)
     if (tournament.participants.length < tournament.playerLimit){
       //FOR IF THERE IS STILL SPACE IN TOURNAMENT//
