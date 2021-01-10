@@ -77,8 +77,9 @@ exports.createUser = async (req, res, next) => {
 }
 
 exports.loginUser = async (req, res, next) => {
+  //NEEDS TO BE VALIDATED//
   try{
-    const user = await (await User.findOne({email: req.body.email})).populate('createdTournaments').populate('joinedTournaments')
+    const user = await User.findOne({email: req.body.email})
     if (!user){
       const error = new Error('User with submitted email could not be found')
       error.statusCode = 404
