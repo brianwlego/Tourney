@@ -1,10 +1,13 @@
 const express = require('express')
 const {body} = require('express-validator')
-
+const isAuth = require('../middleware/is-auth')
 const User = require('../models/user')
 
 const router = express.Router()
 const usersController = require('../controllers/users_controller')
+
+//RELOAD USER//
+router.get('/user', usersController.grabUser)
 
 //LOGIN USER//
 router.post('/login', usersController.loginUser)

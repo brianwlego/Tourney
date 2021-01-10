@@ -3,13 +3,18 @@ const cors = require('cors')
 const mongoose = require('mongoose')
 require('dotenv').config();
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const jwt = require('express-jwt')
 
 const userRoutes = require('./routes/user_routes');
 const tournamentRoutes = require('./routes/tournament_routes');
-const matchRoutes = require('./routes/match_routes')
+const matchRoutes = require('./routes/match_routes');
 
 const app = express();
 
+
+app.use(cookieParser())
+app.use(bodyParser.json());
 
 app.use(cors({
   origin: 'http://localhost:3000',
@@ -17,7 +22,8 @@ app.use(cors({
   allowedHeaders: 'Content-Type, Accepts, Authorization',
   optionsSuccessStatus: 200
 }))
-app.use(bodyParser.json());
+
+
 
 
 app.use('/tournament/:id',matchRoutes)
