@@ -80,6 +80,7 @@ exports.loginUser = async (req, res, next) => {
   //NEEDS TO BE VALIDATED//
   try{
     const user = await User.findOne({email: req.body.email})
+    //REMOVED POPULATE FROM USER, WILL NEED TO RE ADD//
     if (!user){
       const error = new Error('User with submitted email could not be found')
       error.statusCode = 404

@@ -3,11 +3,13 @@ const User = require('../models/user')
 
 
 
-exports.getActiveTournaments = async (req, res, next) => {
+exports.getUpcomingTournaments = async (req, res, next) => {
   try{
-    const tournaments = await Tournament.find({active: true})
+    const tournaments = await Tournament.find({
+      startDate: {$gt: Date.now()}
+    })
     res.status(200).json({
-      activeTournaments: tournaments
+      upcomingTournaments: tournaments
     })
   } catch (error){
     if (!error.statusCode) error.statusCode = 500;
@@ -15,11 +17,23 @@ exports.getActiveTournaments = async (req, res, next) => {
   }
 }
 
-exports.getInactiveTournaments = async (req, res, next) => {
+exports.getCurrentTournaments = async (req, res, next) => {
   try {
-    const tournaments = await Tournament.find({active: false})
+    const tournaments = await Tournament.find({active: true})
     res.status(200).json({
-      inactiveTournaments: tournaments
+      currentTournaments: tournaments
+    })
+  } catch (error){
+    if (!error.statusCode) error.statusCode = 500;
+    next(error);
+  }
+}
+
+exports.getPastTournaments = async (req, res, next) => {
+  try {
+    const tournaments = await Tournament.find({endDate: {$lt: Date.now()}})
+    res.status(200).json({
+      pastTournaments: tournaments
     })
   } catch (error){
     if (!error.statusCode) error.statusCode = 500;

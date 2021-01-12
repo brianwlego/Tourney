@@ -6,8 +6,9 @@ const isAuth = require('../middleware/is-auth')
 const router = express.Router()
 
 //INDEX//
-router.get('/active-tournaments', isAuth, tournaments_controller.getActiveTournaments)
-router.get('/inactive-tournaments', isAuth, tournaments_controller.getInactiveTournaments)
+router.get('/upcoming-tournaments', isAuth, tournaments_controller.getUpcomingTournaments)
+router.get('/current-tournaments', isAuth, tournaments_controller.getCurrentTournaments)
+router.get('/past-tournaments', isAuth, tournaments_controller.getPastTournaments)
 //SHOW//
 router.get('/tournament/:id', tournaments_controller.getTournament)
 //CREATE//
