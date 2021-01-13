@@ -18,7 +18,7 @@ exports.grabUser = async (req, res, next) => {
         })
       }
       req.userId = decodedToken.userId
-      const user = await User.findById(req.userId).populate('createdTournaments').populate('joinedTournaments')
+      const user = await User.findById(req.userId).populate('createdTournaments', '_id').populate('joinedTournaments', '_id')
       res.status(201).json({
         message: 'User authenticated and found',
         user: {
