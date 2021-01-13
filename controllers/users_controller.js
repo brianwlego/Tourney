@@ -77,21 +77,15 @@ exports.createUser = async (req, res, next) => {
 }
 
 exports.loginUser = async (req, res, next) => {
-  //NEEDS TO BE VALIDATED//
   try{
-    const user = await User.findOne({email: req.body.email})
-    //REMOVED POPULATE FROM USER, WILL NEED TO RE ADD//
-    if (!user){
-      const error = new Error('User with submitted email could not be found')
-      error.statusCode = 404
-      throw error;
+    const errors = validationResult(req)
+    if (!errors.isEmpty()){
+      const err =  new Error('Validation failed')
+      err.statusCode = 422
+      err.data = errors.array();
+      throw err;
     }
-    const isEqual = await bcrypt.compare(req.body.password, user.password)
-    if (!isEqual){
-      const error = new Error('Incorrect password')
-      error.statusCode = 401;
-      throw error;
-    } 
+    const user = await User.findOne({email: req.body.email}).populate('createdTournaments').populate('joinedTournaments')
     const token = jwt.sign({
       email: user.email, 
       userId: user._id.toString()
@@ -101,7 +95,7 @@ exports.loginUser = async (req, res, next) => {
       .status(200)
       .cookie('token', token, {httpOnly: true})
       .json({
-        message: "User loged in!",
+        message: "User logged in!",
         user: {
           _id: user._id.toString(), 
           username: user.username, 
