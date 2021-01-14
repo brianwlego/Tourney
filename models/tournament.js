@@ -1,4 +1,5 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const Round = require('./round');
 const Schema = mongoose.Schema
 
 
@@ -46,11 +47,18 @@ const tourneySchema = new Schema({
 
 })
 
-tourneySchema.method.createRound = function(){
-  //Called once participantes.length reaches the player limit
-  //
-
-  
+tourneySchema.method.activate = async function(){
+  this.active = true;
+  const firstRound = new Round({
+    num: 1,
+    tournament: this._id,
+    completed: [],
+    matches: [],
+    players: this.participants
+  })
+  await firstRound.save();
+  await firstRound.createMatches();
+  return firstRound;
 }
 
 

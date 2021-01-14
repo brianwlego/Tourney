@@ -18,7 +18,15 @@ const roundSchema = new Schema({
   completed: [{
     type: Schema.Types.ObjectId, 
     ref: 'Match'
+  }],
+  players: [{
+    type: Schema.Types.ObjectId,
+    ref: 'User'
   }]
 })
+
+roundSchema.method.createMatches = async function(){
+  //BASED OFF THE ROUND NUM MATCH UP PLAYERS RANDOMLY TO SEPERATE MATCHES AND PUSH THEM INTO THE MATCHES ARRAY//
+}
 
 module.exports = mongoose.model('Round', roundSchema)
