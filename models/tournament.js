@@ -47,8 +47,7 @@ const tourneySchema = new Schema({
 
 })
 
-tourneySchema.method.activate = async function(){
-  console.log('inside Active function')
+tourneySchema.methods.activate = async function(){
   this.active = true;
   const firstRound = new Round({
     num: 1,

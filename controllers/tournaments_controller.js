@@ -88,26 +88,25 @@ exports.joinTournament = async (req, res, next) => {
       tournament.participants.push(user._id)
       user.joinedTournaments.push(tournament._id)
       await user.save();
-      await tournament.save()
+      const newTourney = await tournament.save()
 
       //FOR IF SAVED TOURNAMENT HAS NOW REACHED CAPACITY//
       if(tournament.participants.length === tournament.playerLimit){
-        console.log(tournament)
-        debugger
-        const firstRound = tournament.activate();
-        console.log(firstRound)
-        res.status(204).json({
+        const firstRound = await newTourney.activate();
+        console.log('sending back active tourney')
+        res.status(201).json({
           message: "Tournament started!!",
           tournament: newTourney,
           firstRound: firstRound
         })
+      } else {
+        //FOR IF TOURNAMENT PLAYER LIMIT STILL HASN'T BEEN REACHED//
+        res.status(200).json({
+          message: "Player added to tournament",
+          tournament: newTourney
+        })
       }
 
-      //FOR IF TOURNAMENT PLAYER LIMIT STILL HASN'T BEEN REACHED//
-      res.status(201).json({
-        message: "Player added to tournament",
-        tournament: newTourney
-      })
     } else {
       //IF CAPACITY FOR THE TOURNAMENT HAS BEEN REACHED//
       res.status(400).json({

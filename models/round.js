@@ -38,7 +38,7 @@ const roundSchema = new Schema({
   }]
 })
 
-roundSchema.method.createMatches = async function(){
+roundSchema.methods.createMatches = async function(){
   //BASED OFF THE ROUND NUM MATCH UP PLAYERS RANDOMLY//
   //TO SEPERATE MATCHES AND PUSH THEM INTO THE MATCHES ARRAY//
   let numOfMatches = (this.players.length / 2)
@@ -50,17 +50,16 @@ roundSchema.method.createMatches = async function(){
     let tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
 
-    console.log(player1, player2)
-    console.log(playerArray)
-    const newMatch = new match({
+    const newMatch = new Match({
       timeLimit: tomorrow,
-      round: this.num,
+      round: this._id,
       players: [player1, player2]
     })
+    await newMatch.save()
     this.matches.push(newMatch)
     numOfMatches -= 1;
   }
-  console.log(this)
+  this.save()
 }
 
 module.exports = mongoose.model('Round', roundSchema)
