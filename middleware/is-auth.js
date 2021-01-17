@@ -10,7 +10,7 @@ module.exports = (req, res, next) => {
   let decodedToken;
   try {
     decodedToken = jsonwebtoken.verify(authHeader, 'brianandryansecret')
-    console.log("decoded token", decodedToken)
+    // console.log("decoded token", decodedToken)
   } catch(err) {
     err.statusCode = 500;
     throw err;

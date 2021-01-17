@@ -72,7 +72,7 @@ exports.createTournament = async (req, res, next) => {
     tournament: tournament
   })
   const user = User.findById(req.userId)
-  user.createTournaments.push(tournament._id)
+  user.createdTournaments.push(tournament._id)
   } catch (error){
     if (!error.statusCode) error.statusCode = 500;
     next(error);
@@ -88,13 +88,16 @@ exports.joinTournament = async (req, res, next) => {
       tournament.participants.push(user._id)
       user.joinedTournaments.push(tournament._id)
       await user.save();
-      const newTourney = await tournament.save()
+      await tournament.save()
 
       //FOR IF SAVED TOURNAMENT HAS NOW REACHED CAPACITY//
       if(tournament.participants.length === tournament.playerLimit){
-        const firstRound = newTourney.activate();
+        console.log(tournament)
+        debugger
+        const firstRound = tournament.activate();
+        console.log(firstRound)
         res.status(204).json({
-          message: "Player added to tournament",
+          message: "Tournament started!!",
           tournament: newTourney,
           firstRound: firstRound
         })

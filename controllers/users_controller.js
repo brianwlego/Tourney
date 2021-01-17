@@ -29,6 +29,7 @@ exports.grabUser = async (req, res, next) => {
           createdTournaments: user.createdTournaments
         }
       })
+      console.log('User logged in! (GRAB USER)')
     }
   } catch (error) {
     if (!error.statusCode) error.statusCode = 500;
@@ -70,6 +71,7 @@ exports.createUser = async (req, res, next) => {
           joinedTournaments: user.joinedTournaments, 
           createdTournaments: user.createdTournaments}
       })
+      console.log('User logged in! (CREATE USER)')
   } catch(error){
     if (!error.statusCode) error.statusCode = 500;
     next(error);
@@ -92,7 +94,7 @@ exports.loginUser = async (req, res, next) => {
     }, 'brianandryansecret', {expiresIn: '2h'});
     
     res
-      .status(200)
+      .status(201)
       .cookie('token', token, {httpOnly: true})
       .json({
         message: "User logged in!",
@@ -103,6 +105,7 @@ exports.loginUser = async (req, res, next) => {
           joinedTournaments: user.joinedTournaments, 
           createdTournaments: user.createdTournaments}
       })
+      console.log('User logged in! (LOGIN USER)')
   } catch(error){
     if (!error.statusCode) error.statusCode = 500;
     next(error);
