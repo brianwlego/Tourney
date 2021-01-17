@@ -93,7 +93,6 @@ exports.joinTournament = async (req, res, next) => {
       //FOR IF SAVED TOURNAMENT HAS NOW REACHED CAPACITY//
       if(tournament.participants.length === tournament.playerLimit){
         const firstRound = await newTourney.activate();
-        console.log('sending back active tourney')
         res.status(201).json({
           message: "Tournament started!!",
           tournament: newTourney,
