@@ -69,6 +69,7 @@ exports.createTournament = async (req, res, next) => {
   })
   await tournament.save()
   res.status(201).json({
+    message: "Upcoming",
     tournament: tournament
   })
   const user = User.findById(req.userId)
@@ -94,7 +95,7 @@ exports.joinTournament = async (req, res, next) => {
       if(tournament.participants.length === tournament.playerLimit){
         const firstRound = await newTourney.activate();
         res.status(201).json({
-          message: "Tournament started!!",
+          message: "Current",
           tournament: newTourney,
           firstRound: firstRound
         })

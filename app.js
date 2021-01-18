@@ -4,7 +4,6 @@ const mongoose = require('mongoose')
 require('dotenv').config();
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const jwt = require('express-jwt')
 
 const userRoutes = require('./routes/user_routes');
 const tournamentRoutes = require('./routes/tournament_routes');

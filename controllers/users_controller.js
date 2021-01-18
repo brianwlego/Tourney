@@ -59,8 +59,7 @@ exports.createUser = async (req, res, next) => {
       email: user.email, 
       userId: user._id.toString()
     }, 'brianandryansecret', {expiresIn: '2h'});
-    res
-      .status(201)
+    res.status(201)
       .cookie('token', token, {httpOnly: true})
       .json({
         message: 'New User created',
