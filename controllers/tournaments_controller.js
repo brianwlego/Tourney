@@ -93,11 +93,11 @@ exports.joinTournament = async (req, res, next) => {
 
       //FOR IF SAVED TOURNAMENT HAS NOW REACHED CAPACITY//
       if(tournament.participants.length === tournament.playerLimit){
-        const firstRound = await newTourney.activate();
+        
+        const data = await newTourney.activate();
         res.status(201).json({
           message: "Current",
-          tournament: newTourney,
-          firstRound: firstRound
+          tournament: data
         })
       } else {
         //FOR IF TOURNAMENT PLAYER LIMIT STILL HASN'T BEEN REACHED//

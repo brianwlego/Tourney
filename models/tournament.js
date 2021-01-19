@@ -48,7 +48,6 @@ const tourneySchema = new Schema({
 })
 
 tourneySchema.methods.activate = async function(){
-  this.active = true;
   const firstRound = new Round({
     num: 1,
     tournament: this._id,
@@ -56,9 +55,11 @@ tourneySchema.methods.activate = async function(){
     matches: [],
     players: this.participants
   })
-  await firstRound.save();
   await firstRound.createMatches();
-  return firstRound;
+  this.active = true;
+  this.rounds.push(firstRound)
+  await this.save()
+  return this
 }
 
 
