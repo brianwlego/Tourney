@@ -22,6 +22,7 @@
     "mongoose": "^5.11.8"
   },
   "devDependencies": {
+    "mongoose-seed": "^0.6.0",
     "nodemon": "^2.0.6"
   }
 }

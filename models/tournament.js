@@ -53,7 +53,8 @@ tourneySchema.methods.activate = async function(){
     tournament: this._id,
     completed: [],
     matches: [],
-    players: this.participants
+    //FIX THIS ERROR
+    players: [...this.participants]
   })
   await firstRound.createMatches();
   this.active = true;
