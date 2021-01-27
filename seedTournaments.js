@@ -1,8 +1,6 @@
 const mongoose = require('mongoose')
 require('dotenv').config();
 require('datejs')
-const User = require('./models/user')
-const seeder = require('mongoose-seed')
 
 mongoose.connect(`mongodb+srv://brian:${process.env.DBPASSWORD}@cluster0.11orq.mongodb.net/tourney?retryWrites=true&w=majority`, { 
   useNewUrlParser: true, 

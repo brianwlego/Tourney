@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js"
+    "start": "nodemon app.js",
+    "seed": "node seedUsers.js"
   },
   "author": "Brian Lego & Ryan Flynn",
   "license": "ISC",
@@ -23,6 +24,7 @@
     "mongoose": "^5.11.8"
   },
   "devDependencies": {
+    "faker": "^5.2.0",
     "mongoose-seed": "^0.6.0",
     "nodemon": "^2.0.6"
   }
