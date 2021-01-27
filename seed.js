@@ -39,26 +39,59 @@ async function  createUsers(){
 }
 
 async function createUpcomingTournaments(allUsers){
-  const participantNumArray = [3,4,7,8,15,16,31,32]
+  console.log('')
+  console.log('Deleting Tournament collection')
+  await Tournament.deleteMany()
+  console.log('Finished Deleting Tournaments')
+
+  const participantNumArray = [3,4,7,8,15,16,31,32];
   const brian = allUsers[0];
 
+  const saveArray = [];
+  const activeAndUpcoming = [];
 
+  for (const num of participantNumArray){
+    let parts1 = allUsers.slice(0, num)
+    let newT = new Tournament({
+      name: `Upcoming ${Faker.random.word()}`,
+      description: Faker.lorem.sentences(),
+      creator: brian._id.toString(),
+      category: Faker.random.word(),
+      playerLimit: num,
+      startDate: new Date().next().week(),
+      endDate: new Date().next().week().addDays(3),
+      participants: parts1,
+      rounds: [],
+      active: (num % 2) ? false : true
+    })
+    if (newT.active) activeAndUpcoming.push(newT)
+    saveArray.push(newT)
+  }
+  console.log('Saving Upcoming Tournaments')
+  await Tournament.insertMany(saveArray)
+  console.log(saveArray.length, 'tournaments saved.')
+
+  for (let t of activeAndUpcoming){
+
+  }
 
 }
 
 
 
 
+function seed(){
+  mongoose.connect(`mongodb+srv://brian:${process.env.DBPASSWORD}@cluster0.11orq.mongodb.net/tourney?retryWrites=true&w=majority`, { 
+    useNewUrlParser: true, 
+    useUnifiedTopology: true
+  })
+    .then(async() => {
+      const allUsers = await createUsers()
+      await createUpcomingTournaments(allUsers)
+    })
+    .then(()=>mongoose.disconnect())
+    .catch(err => console.log(err))
 
-mongoose.connect(`mongodb+srv://brian:${process.env.DBPASSWORD}@cluster0.11orq.mongodb.net/tourney?retryWrites=true&w=majority`, { 
-  useNewUrlParser: true, 
-  useUnifiedTopology: true
-})
-  .then(() => {
-    return createUsers()
-  })
-  .then((allUsers)=> {
-    createUpcomingTournaments(allUsers)
-  })
-  .then(()=>mongoose.disconnect())
-  .catch(err => console.log(err))
+}
+
+seed()
