@@ -41,17 +41,19 @@ exports.getPastTournaments = async (req, res, next) => {
   }
 }
 
-exports.getTournament = (req, res, next) => {
-  Tournament.findById(req.params.id)
-    .then(tournament => {
-      if (!tournament){
-        res.status(404).json({message: "Tournament not found"})
-      }
+exports.getTournament = async (req, res, next) => {
+  try {
+    const tournament  = await Tournament.findById(req.params.id)
+    if (!tournament){
+      res.status(404).json({message: "Tournament not found"})
+    } else {
       res.status(201).json({
         tournament: tournament
       })
-    })
-    .catch(err=>console.log(err))
+    }
+  } catch (err){
+    err=>console.log(err)
+  }
 }
 
 exports.createTournament = async (req, res, next) => {
