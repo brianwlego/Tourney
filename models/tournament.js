@@ -51,7 +51,7 @@ tourneySchema.methods.activate = async function(){
   const firstRound = new Round({
     num: 1,
     tournament: this._id,
-    completed: [],
+    winners: [],
     matches: [],
     //FIX THIS ERROR
     players: [...this.participants]

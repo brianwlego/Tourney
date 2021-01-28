@@ -1,3 +1,4 @@
+
 const mongoose = require('mongoose');
 const Match = require('./match');
 const Schema = mongoose.Schema
@@ -28,9 +29,9 @@ const roundSchema = new Schema({
     ref: 'Tournament', 
     required: true
   }, 
-  completed: [{
+  winners: [{
     type: Schema.Types.ObjectId, 
-    ref: 'Match'
+    ref: 'User'
   }],
   players: [{
     type: Schema.Types.ObjectId,

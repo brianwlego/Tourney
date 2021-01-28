@@ -43,7 +43,7 @@ exports.getPastTournaments = async (req, res, next) => {
 
 exports.getTournament = async (req, res, next) => {
   try {
-    const tournament  = await Tournament.findById(req.params.id)
+    const tournament  = await (await Tournament.findById(req.params.id).populate('rounds')).populate('matches')
     if (!tournament){
       res.status(404).json({message: "Tournament not found"})
     } else {
