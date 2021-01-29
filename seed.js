@@ -29,7 +29,6 @@ async function  createUsers(){
 
   const brian = new User({ username: 'Brian', email: 'brian@brian.com', password: bcrypt.hashSync('123123', 12), joinedTournaments: []})
   const ryan = new User({ username: 'Ryan', email: 'ryanflynn@gmail.com', password: bcrypt.hashSync('1234', 12), joinedTournaments: []})
-  saveArray.push(brian, ryan)
 
   let i = 1;
   while (i <= 10){
@@ -41,6 +40,7 @@ async function  createUsers(){
     saveArray.push(newUserB, newUserR, newUserJ, newUserI)
     i++
   }
+  saveArray.push(brian, ryan)
   console.log('Saving new Users')
   await User.insertMany(saveArray)
   console.log(saveArray.length, 'users created.')
@@ -73,7 +73,7 @@ async function createUpcomingTournaments(allUsers){
   const activeAndUpcoming = [];
   
   for (const num of participantNumArray){
-    let parts1 = allUsers.slice(0, num).map(t => t._id)
+    let parts1 = allUsers.slice(0, num)
     let newT = new Tournament({
       name: `Upcoming ${Faker.random.word()}`,
       description: Faker.lorem.sentences(),
@@ -88,6 +88,14 @@ async function createUpcomingTournaments(allUsers){
     })
     if (newT.active) activeAndUpcoming.push(newT)
     saveArray.push(newT)
+
+    for (let user of parts1){
+      user.joinedTournaments.push(newT)
+      await user.save();
+    }
+    console.log('')
+    console.log('Saved User joined Tournaments')
+
   }
   console.log('Saving Upcoming Tournaments')
   await Tournament.insertMany(saveArray)
