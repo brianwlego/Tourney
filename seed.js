@@ -79,7 +79,7 @@ async function createUpcomingTournaments(allUsers){
       description: Faker.lorem.sentences(),
       creator: brian._id.toString(),
       category: Faker.random.word(),
-      playerLimit: num,
+      playerLimit: (num%2) ? num + 1 : num ,
       startDate: new Date().next().week(),
       endDate: new Date().next().week().addDays(3),
       participants: parts1,
