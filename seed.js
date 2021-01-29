@@ -27,16 +27,16 @@ async function  createUsers(){
 
   const saveArray = []
 
-  const brian = new User({ username: 'Brian', email: 'brian@brian.com', password: bcrypt.hashSync('123123', 12)})
-  const ryan = new User({ username: 'Ryan', email: 'ryanflynn@gmail.com', password: bcrypt.hashSync('1234', 12)})
+  const brian = new User({ username: 'Brian', email: 'brian@brian.com', password: bcrypt.hashSync('123123', 12), joinedTournaments: []})
+  const ryan = new User({ username: 'Ryan', email: 'ryanflynn@gmail.com', password: bcrypt.hashSync('1234', 12), joinedTournaments: []})
   saveArray.push(brian, ryan)
 
   let i = 1;
   while (i <= 10){
-    let newUserB = new User({ username: Faker.name.firstName(), email: Faker.internet.email(), password:'1234'})
-    let newUserR = new User({ username: Faker.name.firstName(), email: Faker.internet.email(), password:'1234'})
-    let newUserJ = new User({ username: Faker.name.firstName(), email: Faker.internet.email(), password:'1234'})
-    let newUserI = new User({ username: Faker.name.firstName(), email: Faker.internet.email(), password:'1234'})
+    let newUserB = new User({ username: Faker.name.firstName(), email: Faker.internet.email(), password:'1234', joinedTournaments: []})
+    let newUserR = new User({ username: Faker.name.firstName(), email: Faker.internet.email(), password:'1234', joinedTournaments: []})
+    let newUserJ = new User({ username: Faker.name.firstName(), email: Faker.internet.email(), password:'1234', joinedTournaments: []})
+    let newUserI = new User({ username: Faker.name.firstName(), email: Faker.internet.email(), password:'1234', joinedTournaments: []})
 
     saveArray.push(newUserB, newUserR, newUserJ, newUserI)
     i++
@@ -140,7 +140,7 @@ async function createPastTournaments(allUsers){
   const saveArray = [];
   
   for (const num of participantNumArray){
-    let parts1 = allUsers.slice(0, num).map(t => t._id)
+    let parts1 = allUsers.slice(0, num)
     let newT = new Tournament({
       name: `Past ${Faker.random.word()} Tournament`,
       description: Faker.lorem.sentences(),
@@ -154,6 +154,16 @@ async function createPastTournaments(allUsers){
       active: false
     })
     saveArray.push(newT)
+
+    //ADDING THIS TOURNAMENT TO USERS JOINEDT'S//
+    for (let user of parts1){
+      user.joinedTournaments.push(newT)
+      await user.save();
+    }
+    console.log('')
+    console.log('Saved User joined Tournaments')
+
+
   }
   console.log('')
   console.log(`Saving ${saveArray.length} Past Tournaments`)
