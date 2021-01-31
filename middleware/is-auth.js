@@ -7,14 +7,7 @@ module.exports = (req, res, next) => {
     err.statusCode = 401;
     throw err;
   }
-  let decodedToken;
-  try {
-    decodedToken = jsonwebtoken.verify(token, 'brianandryansecret')
-    // console.log("decoded token", decodedToken)
-  } catch(err) {
-    err.statusCode = 500;
-    throw err;
-  }
+  const decodedToken = jsonwebtoken.verify(token, 'brianandryansecret')
   if (!decodedToken){
     const err = new Error('Not authenticated')
     err.statusCode = 401;
