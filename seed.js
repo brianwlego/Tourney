@@ -77,7 +77,7 @@ async function createUpcomingTournaments(allUsers){
     let newT = new Tournament({
       name: `Upcoming ${Faker.random.word()}`,
       description: Faker.lorem.sentences(),
-      creator: brian._id.toString(),
+      creator: brian,
       category: Faker.random.word(),
       playerLimit: (num%2) ? num + 1 : num ,
       startDate: new Date().next().week(),
@@ -109,7 +109,7 @@ async function createFirstRound(array){
   for (let t of array){
     const firstRound = new Round({
       num: 1, 
-      tournament: t._id,
+      tournament: t,
       players: t.participants,
       winners: [],
       matches: []
@@ -123,7 +123,7 @@ async function createFirstRound(array){
       const p2 = playerArray.pop()
       const newMatch = new Match({
         timeLimit: new Date().addDays(1),
-        round: firstRound._id,
+        round: firstRound,
         players: [p1, p2]
       })
       firstRound.matches.push(newMatch)
@@ -152,7 +152,7 @@ async function createPastTournaments(allUsers){
     let newT = new Tournament({
       name: `Past ${Faker.random.word()} Tournament`,
       description: Faker.lorem.sentences(),
-      creator: brian._id.toString(),
+      creator: brian,
       category: Faker.random.word(),
       playerLimit: num,
       startDate: new Date().last().week(),
@@ -171,7 +171,6 @@ async function createPastTournaments(allUsers){
     console.log('')
     console.log('Saved User joined Tournaments')
 
-
   }
   console.log('')
   console.log(`Saving ${saveArray.length} Past Tournaments`)
@@ -182,14 +181,13 @@ async function createPastTournaments(allUsers){
 async function createPastRsMs(arrayOfTs){
 
   for (t of arrayOfTs){
-
     let numOfRounds = Math.log2(t.participants.length)
     let players = [...shuffle(t.participants)]
 
     while(numOfRounds !== 0){
       const r = new Round({
         num: numOfRounds, 
-        tournament: t._id,
+        tournament: t,
         players: players,
         winners: [],
         matches: []
@@ -202,7 +200,7 @@ async function createPastRsMs(arrayOfTs){
         const result = Math.floor(Math.random() * Math.floor(2));
         const newMatch = new Match({
           timeLimit: new Date().last().month(),
-          round: r._id,
+          round: r,
           players: [p0, p1],
           winner: result ? p0 : p1,
           loser: result ? p1 : p0
